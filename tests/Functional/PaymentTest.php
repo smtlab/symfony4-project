@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace App\Test\Service;
 
 use App\Entity\Product;
@@ -29,7 +30,7 @@ class PaymentTest extends KernelTestCase
      * @return void
      * @dataProvider getPaymentProviders
      */
-    public function testItCreatesPayment($paymentProvider, $productName, $productPrice)
+    public function testItCreatesPayment($paymentProvider, $productName, $productPrice): void
     {
         $product = new Product();
         $product->setName($productName);
@@ -42,7 +43,7 @@ class PaymentTest extends KernelTestCase
         $this->assertEquals($payment->getProduct()->getPrice(), $productPrice);
     }
 
-    public function getPaymentProviders()
+    public function getPaymentProviders(): array
     {
         // payment provider, product name, product price
         return [
