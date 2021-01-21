@@ -24,9 +24,9 @@ class ProductCreatorCommand extends Command
     private $validator;
 
     public function __construct(
-        EntityManagerInterface $em, ValidatorInterface $validator
-    )
-    {
+        EntityManagerInterface $em,
+        ValidatorInterface $validator
+    ) {
         parent::__construct();
         $this->em = $em;
         $this->validator = $validator;
@@ -70,7 +70,6 @@ class ProductCreatorCommand extends Command
      */
     private function validate(array $arguements): ConstraintViolationListInterface
     {
-
         $priceConstraint = new Positive();
         $priceConstraint->message = 'Product price must be a valid number';
 
@@ -85,5 +84,4 @@ class ProductCreatorCommand extends Command
 
         return $this->validator->validate($arguements, $constraint);
     }
-
 }
