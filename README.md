@@ -38,7 +38,7 @@ class Custom implements PaymentProviderInterface
 }
 
 ```
-2. Tag your payment provider with name `app.payment_provider` and a unique key
+2. Tag your payment provider service and set an unique key
 ```
 # config/services.yaml
 
