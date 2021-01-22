@@ -1,0 +1,8 @@
+payment:
+  command:
+    description: 'Creates a new payment for product'
+    help: 'This command allows you to pay for a product...'
+    validation:
+      invalid_product_name: 'Only alphabets, numbers and spaces are allowed in product name'
+      invalid_payment_method: 'Allowed payment methods: paypal, razorpay'
+      product_not_found: 'Product not found'

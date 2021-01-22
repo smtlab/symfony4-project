@@ -1,15 +1,10 @@
-# Load Balancer
-
-Given N Servers, in 5 minutes interval, every minute, the load is checked and if the load is less than 50%, the servers are either reduced to N/2 else they are increased to 2N + 1. We want the application to be command line and designed in a way that in future if instead of 5 minutes, owner wants different no. of minutes it should be simply configurable.
-
-Input : No. of Servers (N), server load every minute
-Output : The number of servers running at the end of 5 minutes.
+# **Basic symfony 4 ecommerce**
 
 # Installation
 ```
-git clone git@git.easternenterprise.com:php/symfony-symfony-test-ecommerce.git
+git clone git@git.easternenterprise.com:php/symfony-test-ecommerce.git
 
-cd symfony-servers-running
+cd symfony-test-ecommerce.git
 
 composer install
 ```

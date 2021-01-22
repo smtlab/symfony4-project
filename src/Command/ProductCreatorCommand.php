@@ -57,7 +57,7 @@ class ProductCreatorCommand extends Command
 
         $product = new Product();
         $product->setName($input->getArgument('name'));
-        $product->setPrice($input->getArgument('price'));
+        $product->setPrice((float) $input->getArgument('price'));
         $this->em->persist($product);
         $this->em->flush();
         return 0;

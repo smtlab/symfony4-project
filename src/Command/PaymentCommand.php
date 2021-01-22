@@ -10,6 +10,7 @@ use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Validator\Constraints\Choice;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\Component\Validator\Constraints\Collection;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
@@ -27,23 +28,28 @@ class PaymentCommand extends Command
     /** @var ProductRepository $productRepository */
     private $productRepository;
 
+    /** @var TranslatorInterface $translator */
+    private $translator;
+
     public function __construct(
         PaymentService $paymentService,
         ValidatorInterface $validator,
-        ProductRepository $productRepository
+        ProductRepository $productRepository,
+        TranslatorInterface $translator
     ) {
-        parent::__construct();
         $this->paymentService = $paymentService;
         $this->validator = $validator;
         $this->productRepository = $productRepository;
+        $this->translator = $translator;
+        parent::__construct();
     }
 
     /** {@inheritDoc} */
     protected function configure(): void
     {
         $this
-            ->setDescription('Creates a new payment for product.')
-            ->setHelp('This command allows you to pay for a product...')
+            ->setDescription($this->translator->trans('payment.command.description'))
+            ->setHelp($this->translator->trans('payment.command.help'))
             ->addArgument('paymentMethod', InputArgument::REQUIRED, 'Payment method: paypal, razorpay')
             ->addArgument('productName', InputArgument::REQUIRED, 'Product name')
         ;
@@ -61,7 +67,11 @@ class PaymentCommand extends Command
         }
         $product = $this->productRepository->findOneBy(['name' => $input->getArgument('productName')]);
         if (!$product) {
-            $output->writeln('<error>Product not found: ' . $input->getArgument('productName') . '</error>');
+            $output->writeln('
+                <error>' .
+                $this->translator->trans('payment.command.validation.product_not_found') .
+                '</error>
+            ');
             return 1;
         }
         $this->paymentService->create($input->getArgument('paymentMethod'), $product);
@@ -77,10 +87,12 @@ class PaymentCommand extends Command
     private function validate(array $arguements): ConstraintViolationListInterface
     {
         $paymentMethod = new Choice(['paypal', 'razorpay']);
-        $paymentMethod->message = 'Allowed payment methods: paypal, razorpay';
+        $paymentMethod->message
+            = $this->translator->trans('payment.command.validation.invalid_payment_method');
 
         $productName = new Regex('/[a-zA_Z0-9\s]/');
-        $productName->message = 'Only alphabets, numbers and spaces are allowed in product name';
+        $productName->message
+            = $this->translator->trans('payment.command.validation.invalid_product_name');
 
         $constraint = new Collection([
             'command' => null,
