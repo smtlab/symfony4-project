@@ -2,7 +2,7 @@
 
 # Installation
 ```
-git clone git@git.easternenterprise.com:php/symfony-test-ecommerce.git
+git clone git@smtlab/symfony4-project:php/symfony-test-ecommerce.git
 
 cd symfony-test-ecommerce.git
 
