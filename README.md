@@ -1,5 +1,7 @@
 # **Basic symfony 4 ecommerce**
 
+This project demonstrates the strategy/provider pattern using Symfony 4 service tagging feature.
+
 # Installation
 ```
 git clone git@github.com:smtlab/symfony4-project.git
